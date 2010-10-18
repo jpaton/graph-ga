@@ -6,13 +6,18 @@ TYPEDIR = DataTypes/
 
 TYPESRC = genetic.c \
 		  graph.c
+		  
+ENGINEDIR = Engines/
+
+ENGINESRC = basic.c \
 
 MAINSRC = main.c 
 
-VPATH = $(TYPEDIR)
+VPATH = $(TYPEDIR):$(ENGINEDIR)
 
 SRC = $(MAINSRC) \
-	$(addprefix $(TYPEDIR),$(TYPESRC)) 
+	$(addprefix $(TYPEDIR),$(TYPESRC)) \
+	$(addprefix $(ENGINEDIR),$(ENGINESRC))
 
 SERIALEXE = serial
 SERIALDEBUG = serial.debug

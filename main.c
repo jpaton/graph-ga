@@ -13,6 +13,7 @@
 
 #include "DataTypes/genetic.h"
 #include "DataTypes/graph.h"
+#include "Engines/basic.h"
 
 extern FILE * stdout;
 
@@ -29,11 +30,11 @@ int main( void ) {
 	
 	fprint_graph( &g, stdout );
 	
-	for (int i = 0; i < 10; i++) {
-		Individual ind = random_individual( &g, 5 );
-		printInd(&ind);
-		printf("Fitness: %f\n\n", fitness(&ind, &g));
-	}
+	Individual best = find_solution( &g );
+	
+	printInd( &best );
+	
+	printf( "Fitness: %f\n", fitness(&best, &g) );
 	
 	return 0;
 }

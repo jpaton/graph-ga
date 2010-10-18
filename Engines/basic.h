@@ -6,6 +6,7 @@
 #define __BASIC_H
 
 #include <float.h>
+#include <stdbool.h>
 
 #include "DataTypes/graph.h"
 #include "DataTypes/genetic.h"
@@ -33,5 +34,7 @@
 
 // number of times to crossover each parent pair
 #define NUM_CROSSOVERS 1
+
+Individual find_solution( Graph * g );
 
 #endif
