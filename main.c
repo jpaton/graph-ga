@@ -29,7 +29,7 @@ int main( void ) {
 	Graph g = random_graph( 500, 0.1, 15.0 );
 	
 	for (int max_generations = 1; max_generations <= MAX_GENERATIONS; max_generations++) {
-		//srand( RAND_SEED );
+		srand( RAND_SEED );
 		
 		Individual best = find_solution( &g, max_generations, GENERATION_SIZE );
 		

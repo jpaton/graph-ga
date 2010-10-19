@@ -86,5 +86,12 @@ Individual find_solution(
 		
 	}
 	
+	/** free up memory **/
+	for (int i = 0; i < generation_size; i++) 
+		free(population[i].chromosomes);
+	free(population); // let my people go
+	free(fitnesses);
+	free(decision);
+	
 	return best;
 }

@@ -27,7 +27,7 @@
 // #define SELECTION_SIZE 0.1f
 
 // proportion of resulting generation that should be mutated
-#define MUTATION_SIZE 0.05f
+#define MUTATION_SIZE 0.1f
 
 // number of times to mutate each individual
 #define NUM_MUTATIONS 1
