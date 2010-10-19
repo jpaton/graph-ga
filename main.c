@@ -26,9 +26,9 @@ void printInd( Individual * i0 ) {
 int main( void ) {
 	srand( RAND_SEED );
 	
-	Graph g = random_graph( 10, 0.3, 15.0 );
+	Graph g = random_graph( 100, 0.3, 15.0 );
 	
-	fprint_graph( &g, stdout );
+	// fprint_graph( &g, stdout );
 	
 	Individual best = find_solution( &g );
 	

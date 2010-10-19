@@ -70,4 +70,6 @@
  	Create a random individual for graph g with k equal sized partitions
  */
  Individual random_individual( Graph * g, int k );
+ 
+ Individual copy( Individual * target );
  #endif

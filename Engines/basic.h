@@ -18,10 +18,10 @@
 #define K 2
 
 // maximum number of generations
-#define MAX_GENERATIONS 10
+#define MAX_GENERATIONS 10000
 
 // size of each generation
-#define GENERATION_SIZE 10
+#define GENERATION_SIZE 100
 
 // proportion of each generation to select
 // #define SELECTION_SIZE 0.1f

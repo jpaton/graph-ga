@@ -69,3 +69,15 @@ Individual random_individual( Graph * g, int k ) {
 	
 	return individual;
 }
+
+Individual copy( Individual * target ) {
+	Individual individual;
+	
+	individual.size = target->size;
+	individual.chromosomes = (Chromosome *)malloc(individual.size * sizeof(Chromosome));
+	
+	for (int i = 0; i < individual.size; i++)
+		individual.chromosomes[i] = target->chromosomes[i];
+	
+	return individual;
+}
