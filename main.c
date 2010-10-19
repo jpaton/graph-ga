@@ -26,15 +26,15 @@ void printInd( Individual * i0 ) {
 int main( void ) {
 	srand( RAND_SEED );
 	
-	Graph g = random_graph( 100, 0.3, 15.0 );
+	Graph g = random_graph( 500, 0.1, 15.0 );
 	
-	// fprint_graph( &g, stdout );
-	
-	Individual best = find_solution( &g );
-	
-	printInd( &best );
-	
-	printf( "Fitness: %f\n", fitness(&best, &g) );
+	for (int max_generations = 1; max_generations <= MAX_GENERATIONS; max_generations++) {
+		//srand( RAND_SEED );
+		
+		Individual best = find_solution( &g, max_generations, GENERATION_SIZE );
+		
+		printf( "%d, %f\n", max_generations, fitness(&best, &g) );
+	}
 	
 	return 0;
 }

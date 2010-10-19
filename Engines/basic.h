@@ -18,10 +18,10 @@
 #define K 2
 
 // maximum number of generations
-#define MAX_GENERATIONS 10000
+#define MAX_GENERATIONS 100
 
 // size of each generation
-#define GENERATION_SIZE 100
+#define GENERATION_SIZE 1000
 
 // proportion of each generation to select
 // #define SELECTION_SIZE 0.1f
@@ -35,6 +35,8 @@
 // number of times to crossover each parent pair
 #define NUM_CROSSOVERS 1
 
-Individual find_solution( Graph * g );
+Individual find_solution( Graph * g, 
+						 int max_generations, 
+						 int generation_size  );
 
 #endif
