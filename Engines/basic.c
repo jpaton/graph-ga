@@ -25,15 +25,17 @@ Individual find_solution( Graph * g ) {
 		
 		/* find the best and worst fitness; also, save the best individual */
 		float min_fitness = FLT_MAX;
-		float max_fitness = FLT_MIN;
+		float max_fitness = -10000; // TODO: use a proper constant (not FLT_MIN)
 		for (int i = 0; i < GENERATION_SIZE; i++) {
 			fitnesses[i] = fitness(&population[i], g);
 			if (fitnesses[i] < min_fitness)
 				min_fitness = fitnesses[i];
-			else if (fitnesses[i] > max_fitness) {
+			if (fitnesses[i] > max_fitness) {
 				max_fitness = fitnesses[i];
+				// TODO: we need to manually copy the chromosomes!!!
 				best = population[i]; // save a copy
 			}
+			puts("1");
 		}
 		
 		/* make decisions on whether to keep each individual */
@@ -44,6 +46,7 @@ Individual find_solution( Graph * g ) {
 			float threshold = (fitnesses[i] - min_fitness) * spread;
 			threshold *= threshold;
 			decision[i] = roll <= threshold;
+			puts("2");
 		}
 		
 		/* scrunch the array to make room for the new members */
@@ -54,25 +57,31 @@ Individual find_solution( Graph * g ) {
 			if (decision[i]) continue;
 			for (int j = i; j < GENERATION_SIZE; j++) {
 				if (decision[j]) {
-					Individual temp = population[i];
+		 			Individual temp = population[i];
 					population[i] = population[j];
-					population[j] = temp;
+					population[j] = temp; 
 				}
 			}
+			puts("3");
 		}
 		
 		/* create new individuals through crossover */
 		int couples = lastindex / 2; // couples * 2 = the first parent of a couple
+		couples = couples == 0 ? 1 : couples; // prevent 0 couples
 		for (int i = lastindex; i < GENERATION_SIZE - 1; i += 2) {
 			crossover( &population[(i % couples) * 2],
 					   &population[(i % couples) * 2 + 1],
 					   &population[i],
-					   &population[i + 1]);
+					   &population[i + 1]); 
+			puts("4");
 		}
 		
 		/* mutate some random individuals */
-		for (int i = 0; i < rand() % (int)(MUTATION_SIZE * GENERATION_SIZE); i++) {
-			mutate( &population[rand() % GENERATION_SIZE], K);
+		int num_mutants = MUTATION_SIZE * GENERATION_SIZE;
+		if (num_mutants == 0) num_mutants = 1;
+		for (int i = 0; i < rand() % (num_mutants + 1); i++) {
+		 	mutate( &population[rand() % GENERATION_SIZE], K); 
+			puts("5");
 		}
 		
 	}
