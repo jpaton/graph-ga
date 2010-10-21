@@ -11,12 +11,17 @@ ENGINEDIR = Engines/
 
 ENGINESRC = basic.c \
 
+UTILDIR = Utils/
+
+UTILSRC = sorting.c \
+
 MAINSRC = main.c 
 
-VPATH = $(TYPEDIR):$(ENGINEDIR)
+VPATH = $(TYPEDIR):$(ENGINEDIR):$(UTILDIR)
 
 SRC = $(MAINSRC) \
 	$(addprefix $(TYPEDIR),$(TYPESRC)) \
+	$(addprefix $(UTILDIR),$(UTILSRC)) \
 	$(addprefix $(ENGINEDIR),$(ENGINESRC))
 
 SERIALEXE = serial

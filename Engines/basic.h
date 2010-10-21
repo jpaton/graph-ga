@@ -24,7 +24,7 @@
 #define GENERATION_SIZE 1000
 
 // proportion of each generation to select
-// #define SELECTION_SIZE 0.1f
+#define SELECTION_SIZE 0.1f
 
 // proportion of resulting generation that should be mutated
 #define MUTATION_SIZE 0.1f

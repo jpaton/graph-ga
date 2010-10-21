@@ -9,9 +9,10 @@
 
 #include "genetic.h"
 
-// FIXME: there should be a way to do this without externing everything!
-extern inline Chromosome * make_Chromosomes( size_t );
-extern inline Individual make_Individual( size_t );
+#ifdef DEBUG
+    extern inline Chromosome * make_Chromosomes( size_t );
+    extern inline Individual make_Individual( size_t );
+#endif
 
 float fitness( Individual * individual, Graph * g ) {
 	float fitness = 0.0;
