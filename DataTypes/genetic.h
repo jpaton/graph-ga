@@ -50,7 +50,7 @@
  	Mutates first individual and stores result in second.  The integer parameter is the
  	number of partitions.  This will do just a single mutation.
  */
- inline void mutate( Individual * i, int k ); 
+ void mutate( Individual * individual, int k ); 
  
  /*
  	random_individual

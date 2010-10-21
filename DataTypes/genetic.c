@@ -25,9 +25,40 @@ inline Individual make_Individual( size_t size ) {
  return value;
 }
  
-inline void mutate( Individual * i, int k ) {
-    // TODO: this should ensure equal partition sizes
-    i->chromosomes[rand() % i->size] = rand() % k;
+void mutate( Individual * individual, int k ) {
+    Chromosome temp; // for swapping
+    Chromosome partitions[k]; // for shuffling partitions
+
+    /* generate partition-relative indices of elements to be swapped */
+    int first = rand() % ( individual->size / k );
+    int second = rand() % ( individual->size / k );
+
+    /* select partitions using Fisher-Yates inside-out */
+	partitions[0] = 0;
+	for (int i = 1; i < k; i++) {
+		int j = rand() % (i + 1);
+		partitions[i] = partitions[j];
+		partitions[j] = i;
+	}
+    int first_partition = partitions[0];
+    int second_partition = partitions[1];
+
+    /* convert partition relative indices to real indices */
+    int first_index;
+    int second_index;
+    int i = 0;
+    for( first_index = 0; first > 0; first-- ) 
+        while (individual->chromosomes[i++] != first_partition);
+    first_index = i;
+    i = 0;
+    for( second_index = 0; second > 0; second-- ) 
+        while (individual->chromosomes[i++] != second_partition);
+    second_index = i;
+
+    /* swap chromosomes */
+    temp = individual->chromosomes[first_index];
+    individual->chromosomes[first_index] = individual->chromosomes[second_index];
+    individual->chromosomes[second_index] = temp;
 }
  
 float fitness( Individual * individual, Graph * g ) {

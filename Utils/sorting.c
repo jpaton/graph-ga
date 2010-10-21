@@ -15,7 +15,10 @@
  * Based on Wikipedia psuedocode
  **/
 
-inline void swap( Individual * population, float * fitnesses, size_t i0, size_t i1) {
+#ifndef DEBUG
+inline 
+#endif 
+void swap( Individual * population, float * fitnesses, size_t i0, size_t i1) {
     Individual tempi = population[i0];
     float tempf = fitnesses[i0];
     population[i0] = population[i1];
