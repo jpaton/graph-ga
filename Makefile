@@ -1,6 +1,6 @@
 DEBUG = OFF
 
-CC = gcc
+CC = gcc44
 
 TYPEDIR = DataTypes/
 

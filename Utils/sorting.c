@@ -15,17 +15,20 @@
  * Based on Wikipedia psuedocode
  **/
 
-#ifdef DEBUG
-    extern inline void swap( Individual *, float *, size_t, size_t );
-#endif
+inline void swap( Individual * population, float * fitnesses, size_t i0, size_t i1) {
+    Individual tempi = population[i0];
+    float tempf = fitnesses[i0];
+    population[i0] = population[i1];
+    population[i1] = tempi;
+    fitnesses[i0] = fitnesses[i1];
+    fitnesses[i1] = tempf;
+}
 
-void quicksort( Individual * population, float * fitnesses, size_t size )
-{
+void quicksort( Individual * population, float * fitnesses, size_t size ) {
     __quicksort( population, fitnesses, 0, size - 1 );
 }
 
-static void __quicksort( Individual * population, float * fitnesses, size_t left, size_t right )
-{
+static void __quicksort( Individual * population, float * fitnesses, size_t left, size_t right ) {
     size_t leftIdx = left;
     size_t rightIdx = right;
     size_t pivot;

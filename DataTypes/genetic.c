@@ -14,6 +14,22 @@
     extern inline Individual make_Individual( size_t );
 #endif
 
+inline Chromosome * make_Chromosomes( size_t num ) {
+    return (Chromosome *)malloc(num * sizeof(Chromosome));
+}
+ 
+inline Individual make_Individual( size_t size ) {
+ Individual value; 
+ value.size = size;
+ value.chromosomes = make_Chromosomes( size );
+ return value;
+}
+ 
+inline void mutate( Individual * i, int k ) {
+    // TODO: this should ensure equal partition sizes
+    i->chromosomes[rand() % i->size] = rand() % k;
+}
+ 
 float fitness( Individual * individual, Graph * g ) {
 	float fitness = 0.0;
 	Edge * e;
