@@ -12,7 +12,8 @@
 Individual find_solution( 
 						 Graph * g, 
 						 int max_generations, 
-						 int generation_size ) {
+						 int generation_size,
+                         size_t k) {
 	Individual * population; // array of individuals
 	Individual best; // best individual so far
 	float best_fitness = -FLT_MAX; // fitness of best individual so far
@@ -30,7 +31,7 @@ Individual find_solution(
 		float min_fitness = FLT_MAX;
 		float max_fitness = -FLT_MAX;
 		for (int i = 0; i < generation_size; i++) {
-			fitnesses[i] = fitness(&population[i], g);
+			fitnesses[i] = fitness(&population[i], g, k);
 			if (fitnesses[i] < min_fitness)
 				min_fitness = fitnesses[i];
 			if (fitnesses[i] > max_fitness) {
@@ -51,19 +52,17 @@ Individual find_solution(
 		/* create new individuals through crossover */
 		int couples = lastindex / 2; // couples * 2 = the first parent of a couple
 		couples = couples == 0 ? 1 : couples; // prevent 0 couples
-		for (int i = lastindex; i < generation_size - 1; i += 2) {
+		for (int i = lastindex; i < generation_size - 1; i += 2) 
 			crossover( &population[(i % couples) * 2],
 					   &population[(i % couples) * 2 + 1],
 					   &population[i],
 					   &population[i + 1]); 
-		}
 		
 		/* mutate some random individuals */
 		int num_mutants = MUTATION_SIZE * generation_size;
 		if (num_mutants == 0) num_mutants = 1;
-		for (int i = 0; i < rand() % (num_mutants + 1); i++) {
+		for (int i = 0; i < rand() % (num_mutants + 1); i++) 
 		 	mutate( &population[rand() % generation_size], K); 
-		}
 		
 	}
 	

@@ -46,14 +46,20 @@ void mutate( Individual * individual, int k ) {
     /* convert partition relative indices to real indices */
     int first_index;
     int second_index;
-    int i = 0;
-    for( first_index = 0; first > 0; first-- ) 
+    int i;
+    for( i = first_index = 0; first > 0; first-- ) 
         while (individual->chromosomes[i++] != first_partition);
     first_index = i;
-    i = 0;
-    for( second_index = 0; second > 0; second-- ) 
+    for( i = second_index = 0; second > 0; second-- ) 
         while (individual->chromosomes[i++] != second_partition);
     second_index = i;
+
+    /**
+     * test for sanity and abort if we find none;
+     * this is a temporary fix until we can fix crossover
+     **/
+    if (first_index >= individual->size || second_index >= individual->size)
+        return;
 
     /* swap chromosomes */
     temp = individual->chromosomes[first_index];
@@ -61,17 +67,36 @@ void mutate( Individual * individual, int k ) {
     individual->chromosomes[second_index] = temp;
 }
  
-float fitness( Individual * individual, Graph * g ) {
+float fitness( Individual * individual, Graph * g, size_t k ) {
 	float fitness = 0.0;
+    size_t counts[k];
 	Edge * e;
+
+    // initialize counts
+    for (int i = 0; i < k; i++) 
+        counts[i] = 0;
 	
-	/* iterate over each edge in g */
+	// iterate over each edge in g 
 	for (int i = 0; i < g->num_edges; i++) {
 		e = &g->edges[i]; /* store for readability */
 		if (individual->chromosomes[e->v0] != individual->chromosomes[e->v1]) 
 			/* they are not in the same parition */
 			fitness -= e->weight;
 	}
+
+    // find the sizes of each parition
+    for (int i = 0; i < individual->size; i++) 
+        counts[(int)individual->chromosomes[i]]++;
+
+    // find count difference penalty
+    size_t min, max;
+    max = 0;
+    min = SIZE_MAX;
+    for (int i = 0; i < k; i++) {
+        if (counts[i] < min) min = counts[i];
+        if (counts[i] > max) max = counts[i];
+    }
+    fitness -= (float)(max - min) * K_PENALTY;
 	
 	return fitness;
 }
