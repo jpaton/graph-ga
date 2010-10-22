@@ -13,7 +13,7 @@
 #define K_PENALTY 100.0f
 
 // maximum number of generations
-#define MAX_GENERATIONS 100
+#define MAX_GENERATIONS 1000
 
 // size of each generation
 #define GENERATION_SIZE 100
@@ -22,13 +22,13 @@
 #define SELECTION_SIZE 0.1f
 
 // proportion of resulting generation that should be mutated
-#define MUTATION_SIZE 0.1f
+#define MUTATION_SIZE 0.05f
 
 // number of times to mutate each individual
-#define NUM_MUTATIONS 1
+#define NUM_MUTATIONS 0.1
 
 // number of times to crossover each parent pair
-#define NUM_CROSSOVERS 1
+#define NUM_CROSSOVERS 2
 
 // number of vertices in graph
 #define NUM_VERTICES 500    

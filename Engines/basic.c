@@ -67,7 +67,6 @@ Individual find_solution(
 		if (num_mutants == 0) num_mutants = 1;
 		for (int i = 0; i < rand() % (num_mutants + 1); i++) 
 		 	mutate( &population[rand() % generation_size], K); 
-		
 	}
 	
 	/** free up memory **/
