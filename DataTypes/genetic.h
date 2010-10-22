@@ -34,12 +34,7 @@
  	Evaluates the fitness of an individual for a given graph and returns it as 
  	a float
  */
- float fitness( Individual *, Graph *, size_t k );
-
- /**
-  * Penalty multiplier applied to the maximum difference in partition size
-  **/
- #define K_PENALTY 100
+ float fitness( Individual *, Graph *, size_t k, float k_penalty );
  
  /*
  	crossover

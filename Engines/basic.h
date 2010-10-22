@@ -14,6 +14,7 @@
 Individual find_solution( Graph * g, 
 						 int max_generations, 
 						 int generation_size,
-                         size_t k);
+                         size_t k,
+                         float k_penalty);
 
 #endif

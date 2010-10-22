@@ -7,13 +7,16 @@
 **/
 
 #include "basic.h"
+#include "params.h"
 #include "Utils/sorting.h"
 
 Individual find_solution( 
 						 Graph * g, 
 						 int max_generations, 
 						 int generation_size,
-                         size_t k) {
+                         size_t k,
+                         float k_penalty
+                         ) {
 	Individual * population; // array of individuals
 	Individual best; // best individual so far
 	float best_fitness = -FLT_MAX; // fitness of best individual so far
@@ -31,7 +34,7 @@ Individual find_solution(
 		float min_fitness = FLT_MAX;
 		float max_fitness = -FLT_MAX;
 		for (int i = 0; i < generation_size; i++) {
-			fitnesses[i] = fitness(&population[i], g, k);
+			fitnesses[i] = fitness(&population[i], g, k, k_penalty);
 			if (fitnesses[i] < min_fitness)
 				min_fitness = fitnesses[i];
 			if (fitnesses[i] > max_fitness) {

@@ -39,11 +39,11 @@ int main( void ) {
 		srand( RAND_SEED );
 		
         clock_t start = clock();
-		Individual best = find_solution( &g, max_generations, GENERATION_SIZE, K );
+		Individual best = find_solution( &g, max_generations, GENERATION_SIZE, K, K_PENALTY );
         clock_t end = clock();
 		
 		printf( "%d,", max_generations );
-        printf( "%f,", fitness(&best, &g, K) );
+        printf( "%f,", fitness(&best, &g, K, K_PENALTY) );
         printf( "%d,", end - start );
         printf( "%d,", NUM_VERTICES );
         printf( "%f,", PROB_EDGE );

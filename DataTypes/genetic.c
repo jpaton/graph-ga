@@ -67,7 +67,7 @@ void mutate( Individual * individual, int k ) {
     individual->chromosomes[second_index] = temp;
 }
  
-float fitness( Individual * individual, Graph * g, size_t k ) {
+float fitness( Individual * individual, Graph * g, size_t k, float k_penalty ) {
 	float fitness = 0.0;
     size_t counts[k];
 	Edge * e;
@@ -96,7 +96,8 @@ float fitness( Individual * individual, Graph * g, size_t k ) {
         if (counts[i] < min) min = counts[i];
         if (counts[i] > max) max = counts[i];
     }
-    fitness -= (float)(max - min) * K_PENALTY;
+
+    fitness -= (float)(max - min) * k_penalty;
 	
 	return fitness;
 }

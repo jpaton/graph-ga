@@ -9,11 +9,14 @@
 // K = number of partititions in final solution 
 #define K 2
 
+// K_PENALTY = penalty muliplier for uneven partitions
+#define K_PENALTY 100.0f
+
 // maximum number of generations
 #define MAX_GENERATIONS 100
 
 // size of each generation
-#define GENERATION_SIZE 1000
+#define GENERATION_SIZE 100
 
 // proportion of each generation to select
 #define SELECTION_SIZE 0.1f
