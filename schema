@@ -1,0 +1,15 @@
+Database schema: 
+
+num_generations         int
+best_fitness            float
+processor_time          bigint
+num_vertices            int
+prob_edge               float
+max_edge_weight         float
+k                       int
+k_penalty               float
+generation_size         int
+selection_size          float
+mutation_size           float
+num_crossovers          float
+algo_type               string

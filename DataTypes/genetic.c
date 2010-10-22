@@ -19,10 +19,10 @@ inline Chromosome * make_Chromosomes( size_t num ) {
 }
  
 inline Individual make_Individual( size_t size ) {
- Individual value; 
- value.size = size;
- value.chromosomes = make_Chromosomes( size );
- return value;
+    Individual value; 
+    value.size = size;
+    value.chromosomes = make_Chromosomes( size );
+    return value;
 }
  
 void mutate( Individual * individual, int k ) {
@@ -119,6 +119,8 @@ void crossover( Individual * p0, Individual * p1, Individual * o0, Individual * 
 		offspring1[i] = p0->chromosomes[i];
 	}
 	
+    free(o0->chromosomes);
+    free(o1->chromosomes);
 	o0->chromosomes = offspring0;
 	o1->chromosomes = offspring1;
 }

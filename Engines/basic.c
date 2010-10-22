@@ -56,6 +56,7 @@ Individual find_solution(
 		int couples = lastindex / 2; // couples * 2 = the first parent of a couple
 		couples = couples == 0 ? 1 : couples; // prevent 0 couples
 		for (int i = lastindex; i < generation_size - 1; i += 2) 
+            /* first, free up the offspring's chromosomes */
 			crossover( &population[(i % couples) * 2],
 					   &population[(i % couples) * 2 + 1],
 					   &population[i],
