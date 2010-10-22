@@ -105,24 +105,16 @@ float fitness( Individual * individual, Graph * g, size_t k, float k_penalty ) {
 void crossover( Individual * p0, Individual * p1, Individual * o0, Individual * o1 ) {
 	int n = rand() % p0->size + 1; // choose cutoff for crossover
 	
-	/* allocate memory for chromosomes */
-	Chromosome * offspring0 = (Chromosome *)malloc(p0->size * sizeof(Chromosome));
-	Chromosome * offspring1 = (Chromosome *)malloc(p0->size * sizeof(Chromosome));
-	
 	/* assign chromosomes */
 	for (int i = 0; i < n; i++) {
-		offspring0[i] = p0->chromosomes[i];
-		offspring1[i] = p1->chromosomes[i];
+		o0->chromosomes[i] = p0->chromosomes[i];
+		o1->chromosomes[i] = p1->chromosomes[i];
 	}	
 	for (int i = n; i < p0->size; i++) {
-		offspring0[i] = p1->chromosomes[i];
-		offspring1[i] = p0->chromosomes[i];
+		o0->chromosomes[i] = p1->chromosomes[i];
+		o1->chromosomes[i] = p0->chromosomes[i];
 	}
 	
-    free(o0->chromosomes);
-    free(o1->chromosomes);
-	o0->chromosomes = offspring0;
-	o1->chromosomes = offspring1;
 }
 
 Individual random_individual( Graph * g, int k ) {

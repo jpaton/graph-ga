@@ -33,7 +33,20 @@ int main( void ) {
 	Graph g = random_graph( NUM_VERTICES, PROB_EDGE, MAX_EDGE_WEIGHT );
 
     // print column headings
-    printf( "num_generations, best_fitness, processor_time, num_vertices, prob_edge, max_edge_weight, k, k_penalty, generation_size, selection_size, mutation_size, num_crossovers, algo_type \n");
+    printf( "num_generations, \
+             best_fitness, \
+             processor_time, \
+             num_vertices, \
+             prob_edge, \
+             max_edge_weight, \
+             k, \
+             k_penalty, \
+             generation_size, \
+             selection_size, \
+             mutation_size, \
+             num_crossovers, \
+             algo_type, \
+             \n");
 	
 	for (int max_generations = 1; max_generations <= MAX_GENERATIONS; max_generations++) {
 		srand( RAND_SEED );
