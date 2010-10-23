@@ -33,6 +33,7 @@ Individual find_solution(
 		/* find the best and worst fitness; also, save the best individual */
 		float min_fitness = FLT_MAX;
 		float max_fitness = -FLT_MAX;
+        #pragma omp parallel for
 		for (int i = 0; i < generation_size; i++) {
 			fitnesses[i] = fitness(&population[i], g, k, k_penalty);
 			if (fitnesses[i] < min_fitness)

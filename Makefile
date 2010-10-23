@@ -60,7 +60,7 @@ debug:
 	make DEBUG=ON
 
 $(EXE): $(FINALOBJ)
-	$(CC) $(LDFLAGS) $(PROFILE) $(FINALOBJ) -o $(BINDIR)$@
+	$(CC) $(LDFLAGS) $(PROFILE) $(FINALOBJ) -o $(BINDIR)$@ -lm
 
 obj/optimized/%.o: %.c
 	$(CC) -c $(CCFLAGS) $(INCLUDES) -DRAND_SEED=$(RAND_SEED) $< -o $@

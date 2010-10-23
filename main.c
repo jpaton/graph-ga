@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <omp.h>
 
 #include "DataTypes/genetic.h"
 #include "DataTypes/graph.h"
@@ -51,9 +52,9 @@ int main( void ) {
 	for (int max_generations = 1; max_generations <= MAX_GENERATIONS; max_generations++) {
 		srand( RAND_SEED );
 		
-        clock_t start = clock();
+        double start = omp_get_wtime();
 		Individual best = find_solution( &g, max_generations, GENERATION_SIZE, K, K_PENALTY );
-        clock_t end = clock();
+        double end = omp_get_wtime();
 		
 		printf( "%d,", max_generations );
         printf( "%f,", fitness(&best, &g, K, K_PENALTY) );

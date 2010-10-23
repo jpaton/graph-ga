@@ -7,6 +7,7 @@
 
 #include <float.h>
 #include <stdbool.h>
+#include <omp.h>
 
 #include "DataTypes/graph.h"
 #include "DataTypes/genetic.h"
