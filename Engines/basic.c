@@ -34,7 +34,7 @@ Individual find_solution(
 		float min_fitness = FLT_MAX;
 		float max_fitness = -FLT_MAX;
         #ifndef SERIAL
-        #pragma omp parallel for private(i)
+        #pragma omp parallel for 
         #endif
 		for (int i = 0; i < generation_size; i++) {
 			fitnesses[i] = fitness(&population[i], g, k, k_penalty);
