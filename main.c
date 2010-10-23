@@ -28,7 +28,7 @@ void printInd( Individual * i0 ) {
 }
 
 int main( void ) {
-	rng_initialize( RAND_SEED );
+	srand( RAND_SEED );
 	
 	Graph g = random_graph( NUM_VERTICES, PROB_EDGE, MAX_EDGE_WEIGHT );
 
@@ -57,7 +57,7 @@ int main( void ) {
 		
 		printf( "%d,", max_generations );
         printf( "%f,", fitness(&best, &g, K, K_PENALTY) );
-        printf( "%d,", end - start );
+        printf( "%d,", (int)(end - start) );
         printf( "%d,", NUM_VERTICES );
         printf( "%f,", PROB_EDGE );
         printf( "%f,", MAX_EDGE_WEIGHT );
@@ -66,7 +66,7 @@ int main( void ) {
         printf( "%d,", GENERATION_SIZE );
         printf( "%f,", SELECTION_SIZE );
         printf( "%f,", MUTATION_SIZE );
-        printf( "%f,", NUM_CROSSOVERS );
+        printf( "%d,", NUM_CROSSOVERS );
         printf( "%s,", ALGO_TYPE  );
         printf( "\n" );
 	}

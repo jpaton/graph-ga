@@ -14,7 +14,7 @@ ENGINESRC = basic.c \
 UTILDIR = Utils/
 
 UTILSRC = sorting.c \
-		  rng.c \
+		  #rng.c \
 
 MAINSRC = main.c 
 
