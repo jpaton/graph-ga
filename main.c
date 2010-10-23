@@ -24,7 +24,7 @@ extern FILE * stdout;
 #define ALGO_TYPE "serial"
 #else
 #define ALGO_TYPE "openmp"
-#define NUM_THREADS 8
+#define NUM_THREADS 12
 #endif
 
 void printInd( Individual * i0 ) {
@@ -52,6 +52,7 @@ int main( void ) {
              mutation_size, \
              num_crossovers, \
              algo_type, \
+             num_threads, \
              \n");
 
     #ifndef SERIAL
@@ -74,7 +75,7 @@ int main( void ) {
 		printf( "%d,", max_generations );
         printf( "%f,", fitness(&best, &g, K, K_PENALTY) );
         #ifdef SERIAL
-        printf( "%g,", (double)(end - start) / CLOCKS_PER_SEC );
+        printf( "%f,", (double)(end - start) / CLOCKS_PER_SEC );
         #else
         printf( "%f,", end - start );
         #endif
@@ -88,6 +89,11 @@ int main( void ) {
         printf( "%f,", MUTATION_SIZE );
         printf( "%d,", NUM_CROSSOVERS );
         printf( "%s,", ALGO_TYPE  );
+        #ifdef SERIAL
+        printf( "%d,", 1 );
+        #else
+        printf( "%d,", NUM_THREADS);
+        #endif
         printf( "\n" );
 	}
 	
