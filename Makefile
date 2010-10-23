@@ -25,20 +25,27 @@ SRC = $(MAINSRC) \
 	$(addprefix $(UTILDIR),$(UTILSRC)) \
 	$(addprefix $(ENGINEDIR),$(ENGINESRC))
 
-SERIALEXE = serial
-SERIALDEBUG = serial.debug
-
 BINDIR = bin/
 
 INCLUDES = -I.
 
-ifeq "$(DEBUG)" "OFF"
-CCFLAGS = -std=c99 -O3
-EXE = $(SERIALEXE)
+ifeq "$(SERIAL)" "ON"
+# no parallelization
+EXEPREFIX = "serial"
+PARFLAGS = -DSERIAL
 else
-LDFLAGS = -pg
-CCFLAGS = -std=c99 -g -pg -DDEBUG
-EXE = $(SERIALDEBUG)
+# enable parallelization
+EXEPREFIX = "openmp"
+endif
+
+ifeq "$(DEBUG)" "OFF"
+CCFLAGS = -std=c99 -O3 -fopenmp
+LDFLAGS = -fopenmp
+EXE = $(EXEPREFIX).opt
+else
+CCFLAGS = -std=c99 -g -pg -DDEBUG -fopenmp
+LDFLAGS = -pg -fopenmp
+EXE = $(EXEPREFIX).debug
 endif
 
 OBJS = $(SRC:.c=.o)
@@ -59,14 +66,17 @@ default: $(EXE)
 debug:
 	make DEBUG=ON
 
+serial:
+	make SERIAL=ON
+
 $(EXE): $(FINALOBJ)
 	$(CC) $(LDFLAGS) $(PROFILE) $(FINALOBJ) -o $(BINDIR)$@ -lm
 
 obj/optimized/%.o: %.c
-	$(CC) -c $(CCFLAGS) $(INCLUDES) -DRAND_SEED=$(RAND_SEED) $< -o $@
+	$(CC) -c $(CCFLAGS) $(INCLUDES) $(PARFLAGS) -DRAND_SEED=$(RAND_SEED) $< -o $@
 	
 obj/debug/%.o: %.c
-	$(CC) -c $(CCFLAGS) $(INCLUDES) -DRAND_SEED=$(RAND_SEED) $< -o $@
+	$(CC) -c $(CCFLAGS) $(INCLUDES) $(PARFLAGS) -DRAND_SEED=$(RAND_SEED) $< -o $@
 
 clean:
-	rm -f $(addprefix obj/optimized/,$(BASEOBJ)) $(addprefix obj/debug/,$(BASEOBJ)) $(BINDIR)$(SERIALEXE) $(BINDIR)$(SERIALDEBUG)
+	rm -f $(addprefix obj/optimized/,$(BASEOBJ)) $(addprefix obj/debug/,$(BASEOBJ)) $(BINDIR)openmp.opt $(BINDIR)openmp.debug $(BINDIR)serial.opt $(BINDIR)serial.debug 
