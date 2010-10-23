@@ -1,6 +1,6 @@
 DEBUG = OFF
 
-CC = gcc44
+CC = gcc
 
 TYPEDIR = DataTypes/
 
@@ -14,6 +14,7 @@ ENGINESRC = basic.c \
 UTILDIR = Utils/
 
 UTILSRC = sorting.c \
+		  rng.c \
 
 MAINSRC = main.c 
 

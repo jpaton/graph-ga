@@ -28,7 +28,7 @@ void printInd( Individual * i0 ) {
 }
 
 int main( void ) {
-	srand( RAND_SEED );
+	rng_initialize( RAND_SEED );
 	
 	Graph g = random_graph( NUM_VERTICES, PROB_EDGE, MAX_EDGE_WEIGHT );
 
