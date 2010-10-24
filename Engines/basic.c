@@ -11,7 +11,7 @@
 #include "Utils/sorting.h"
 
 Individual find_solution( 
-						 Graph * g, 
+						 Model * g, 
 						 int max_generations, 
 						 int generation_size,
                          size_t k,

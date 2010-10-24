@@ -12,8 +12,6 @@
 #include <stddef.h>
 #include "DataTypes/genetic.h"
 
-inline void swap( Individual * population, float * fitnesses, size_t i0, size_t i1); 
-
 void quicksort( Individual * population, float * fitnesses, size_t size ); 
 static void __quicksort( Individual * population, float * fitnesses, size_t left, size_t right ); 
 

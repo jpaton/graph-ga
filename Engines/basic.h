@@ -12,7 +12,7 @@
 #include "DataTypes/graph.h"
 #include "DataTypes/genetic.h"
 
-Individual find_solution( Graph * g, 
+Individual find_solution( Model * g, 
 						 int max_generations, 
 						 int generation_size,
                          size_t k,
