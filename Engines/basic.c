@@ -31,22 +31,26 @@ Individual find_solution(
 	for (int generation = 0; generation < max_generations; generation++) {
 		
 		/* find the best and worst fitness; also, save the best individual */
-		float min_fitness = FLT_MAX;
 		float max_fitness = -FLT_MAX;
         #ifndef SERIAL
-        #pragma omp parallel for 
+        #pragma omp parallel for shared(max_fitness, best)
         #endif
 		for (int i = 0; i < generation_size; i++) {
 			fitnesses[i] = fitness(&population[i], g, k, k_penalty);
-			if (fitnesses[i] < min_fitness)
-				min_fitness = fitnesses[i];
-			if (fitnesses[i] > max_fitness) {
-				max_fitness = fitnesses[i];
-				if (max_fitness > best_fitness) {
-					best = copy(&population[i]); // save a copy
-					best_fitness = max_fitness;
-				}
-			}
+            #ifndef SERIAL
+            #pragma omp critical 
+            {
+            #endif
+                if (fitnesses[i] > max_fitness) {
+                        max_fitness = fitnesses[i];
+                    if (max_fitness > best_fitness) {
+                        best = copy(&population[i]); // save a copy
+                        best_fitness = max_fitness;
+                    }
+                }
+            #ifndef SERIAL
+            }
+            #endif
 		}
 		
         /* do in place sorting of individuals */

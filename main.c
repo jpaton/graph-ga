@@ -24,7 +24,7 @@ extern FILE * stdout;
 #define ALGO_TYPE "serial"
 #else
 #define ALGO_TYPE "openmp"
-#define NUM_THREADS 12
+#define NUM_THREADS 8
 #endif
 
 void printInd( Individual * i0 ) {
