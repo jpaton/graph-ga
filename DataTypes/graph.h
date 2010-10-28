@@ -12,13 +12,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-/*
-typedef struct vertex {
-	uint32_t id; // this vertex's id
-	float weight; // weight of vertex
-} Vertex;
-*/
-
 typedef float Vertex;
 
 typedef struct edge {
