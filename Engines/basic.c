@@ -15,7 +15,8 @@ Individual find_solution(
 						 int max_generations, 
 						 int generation_size,
                          size_t k,
-                         float k_penalty
+                         float k_penalty,
+                         int num_blocks
                          ) {
 	Individual * population; // array of individuals
 	Individual best; // best individual so far
@@ -33,9 +34,13 @@ Individual find_solution(
 		/* find the best and worst fitness; also, save the best individual */
 		float max_fitness = -FLT_MAX;
         #ifndef SERIAL
+        int num_per_block = generation_size / num_blocks;
         #pragma omp parallel for shared(max_fitness, best)
-        #endif
+        for (int j = 0; j < num_blocks; j++) {
+            for (int i = j * num_per_block; i < (j + 1) * num_per_block && i < generation_size; i++) {
+        #else
 		for (int i = 0; i < generation_size; i++) {
+        #endif
 			fitnesses[i] = fitness(&population[i], g, k, k_penalty);
             #ifndef SERIAL
             #pragma omp critical 
@@ -52,6 +57,9 @@ Individual find_solution(
             }
             #endif
 		}
+        #ifndef SERIAL
+        }
+        #endif
 		
         /* do in place sorting of individuals */
         quicksort( population, fitnesses, generation_size );

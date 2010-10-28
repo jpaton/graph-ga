@@ -151,10 +151,10 @@ Individual copy( Individual * target ) {
 }
 
 void swap( Individual * population, float * fitnesses, size_t i0, size_t i1) {
-    Individual tempi = population[i0];
+    Individual tempi;
     float tempf;
 
-    // swap Individuals
+    // swap individuals
     tempi = population[i0];
     population[i0] = population[i1];
     population[i1] = tempi;

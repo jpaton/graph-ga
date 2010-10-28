@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <omp.h>
+#include <getopt.h>
 
 #include "DataTypes/genetic.h"
 #include "DataTypes/graph.h"
@@ -23,14 +24,29 @@ extern FILE * stdout;
 #ifdef SERIAL
 #define ALGO_TYPE "serial"
 #else
-#define ALGO_TYPE "openmp"
-#define NUM_THREADS 8
+#define ALGO_TYPE "openmp.block"
+#define NUM_THREADS 12
 #endif
 
 void printInd( Individual * i0 ) {
 	for (int i = 0; i < i0->size; i++)
 		printf("%d ", i0->chromosomes[i]);
 	printf("\n");
+}
+
+void process_options( int argc, char *argv[] ) {
+    int opt;
+    int option_index = 0;
+
+    static struct option options [] = {
+        { "generation_size", required_argument, NULL, true },
+        { 0, 0, 0, 0 }
+    };
+
+    while (true) {
+        opt = getopt_long( argc, argv, "", options, &option_index );
+        if (opt == -1) break;
+    }
 }
 
 int main( void ) {
@@ -56,23 +72,24 @@ int main( void ) {
              \n");
 
     #ifndef SERIAL
-    omp_set_num_threads( NUM_THREADS );
+    for (int num_threads = 1; num_threads <= NUM_THREADS; num_threads++) {
+        omp_set_num_threads( num_threads );
+    #else
+        int num_threads = 1;
     #endif
-	
-	for (int max_generations = 1; max_generations <= MAX_GENERATIONS; max_generations++) {
 		srand( RAND_SEED );
 		
         #ifdef SERIAL
         clock_t start = clock();
-		Individual best = find_solution( &g, max_generations, GENERATION_SIZE, K, K_PENALTY );
+		Individual best = find_solution( &g, MAX_GENERATIONS, GENERATION_SIZE, K, K_PENALTY, 1 );
         clock_t end = clock();
         #else
         double start = omp_get_wtime();
-		Individual best = find_solution( &g, max_generations, GENERATION_SIZE, K, K_PENALTY );
+		Individual best = find_solution( &g, MAX_GENERATIONS, GENERATION_SIZE, K, K_PENALTY, num_threads );
         double end = omp_get_wtime();
         #endif
 		
-		printf( "%d,", max_generations );
+		printf( "%d,", MAX_GENERATIONS );
         printf( "%f,", fitness(&best, &g, K, K_PENALTY) );
         #ifdef SERIAL
         printf( "%f,", (double)(end - start) / CLOCKS_PER_SEC );
@@ -92,10 +109,12 @@ int main( void ) {
         #ifdef SERIAL
         printf( "%d,", 1 );
         #else
-        printf( "%d,", NUM_THREADS);
+        printf( "%d,", num_threads);
         #endif
         printf( "\n" );
+    #ifndef SERIAL
 	}
+    #endif
 	
 	return 0;
 }

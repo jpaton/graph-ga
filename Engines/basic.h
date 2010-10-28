@@ -16,6 +16,7 @@ Individual find_solution( Model * g,
 						 int max_generations, 
 						 int generation_size,
                          size_t k,
-                         float k_penalty);
+                         float k_penalty,
+                         int num_blocks);
 
 #endif
