@@ -10,19 +10,24 @@
 #include "params.h"
 #include "Utils/sorting.h"
 
+int min( int a, int b ) {
+    return a < b ? a : b;
+}
+
 Individual find_solution( 
 						 Model * g, 
 						 int max_generations, 
 						 int generation_size,
                          size_t k,
                          float k_penalty,
-                         int num_blocks
+                         int num_threads
                          ) {
 	Individual * population; // array of individuals
 	Individual best; // best individual so far
 	float best_fitness = -FLT_MAX; // fitness of best individual so far
 	float * fitnesses = (float *)malloc(generation_size * sizeof(float)); // fitnesses[i] = fitness of population[i]
 	bool * decision = (bool *)malloc(generation_size * sizeof(bool)); // decision[i] iff we will keep population[i]
+    int num_blocks = ( num_threads + generation_size - 1 ) / num_threads;
 	
 	/* create initial generation */
 	population = (Individual *)malloc(generation_size * sizeof(Individual));
@@ -35,9 +40,10 @@ Individual find_solution(
 		float max_fitness = -FLT_MAX;
         #ifndef SERIAL
         int num_per_block = generation_size / num_blocks;
-        #pragma omp parallel for shared(max_fitness, best)
-        for (int j = 0; j < num_blocks; j++) {
-            for (int i = j * num_per_block; i < (j + 1) * num_per_block && i < generation_size; i++) {
+        int i, j;
+        #pragma omp parallel for shared(max_fitness, best, k, k_penalty, g) private(i, j)
+        for (j = 0; j < num_blocks; j++) {
+            for (i = j * num_per_block; i < min((j + 1) * num_per_block, generation_size); i++) {
         #else
 		for (int i = 0; i < generation_size; i++) {
         #endif
